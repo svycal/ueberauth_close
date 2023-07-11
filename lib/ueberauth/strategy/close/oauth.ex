@@ -78,7 +78,6 @@ defmodule Ueberauth.Strategy.Close.OAuth do
   def get_token(client, params, headers) do
     client
     |> OAuth2.Strategy.AuthCode.get_token(params, headers)
-    |> put_header("authorization", "Basic " <> Base.encode64(client.client_secret <> ":"))
   end
 
   defp resolve_values(list) do
