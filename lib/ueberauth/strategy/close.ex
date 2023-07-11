@@ -16,17 +16,16 @@ defmodule Ueberauth.Strategy.Close do
   Handles the initial redirect to the Close authentication page.
   """
   def handle_request!(conn) do
-    # {params, conn} =
-    #   []
-    #   |> with_scope(conn)
-    #   |> with_state_param(conn)
-    #   |> with_pkce_param(conn)
+    params =
+      []
+      |> with_scope(conn)
+      |> with_state_param(conn)
 
-    # opts = [redirect_uri: callback_url(conn)]
-    # module = option(conn, :oauth2_module)
+    opts = [redirect_uri: callback_url(conn)]
+    module = option(conn, :oauth2_module)
 
-    # conn
-    # |> redirect!(module.authorize_url!(params, opts))
+    conn
+    |> redirect!(module.authorize_url!(params, opts))
   end
 
   @doc """
