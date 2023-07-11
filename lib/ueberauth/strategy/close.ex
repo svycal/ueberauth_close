@@ -10,7 +10,6 @@ defmodule Ueberauth.Strategy.Close do
   alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
-  alias Ueberauth.Strategy.Close.CalDAV
 
   @doc """
   Handles the initial redirect to the Close authentication page.
