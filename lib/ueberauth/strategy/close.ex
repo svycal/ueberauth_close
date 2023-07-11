@@ -63,24 +63,24 @@ defmodule Ueberauth.Strategy.Close do
     |> put_private(:close_token, nil)
   end
 
-  # @doc """
-  # Includes the credentials from the Fastmail response.
-  # """
+  @doc """
+  Includes the credentials from the Close response.
+  """
 
-  # def credentials(conn) do
-  # token = conn.private.fastmail_token
-  # scope_string = token.other_params["scope"] || ""
-  # scopes = String.split(scope_string, " ")
+  def credentials(conn) do
+    token = conn.private.close_token
+    scope_string = token.other_params["scope"] || ""
+    scopes = String.split(scope_string, " ")
 
-  # %Credentials{
-  #   expires: !!token.expires_at,
-  #   expires_at: token.expires_at,
-  #   scopes: scopes,
-  #   token_type: Map.get(token, :token_type),
-  #   refresh_token: token.refresh_token,
-  #   token: token.access_token
-  # }
-  # end
+    %Credentials{
+      expires: !!token.expires_at,
+      expires_at: token.expires_at,
+      scopes: scopes,
+      token_type: Map.get(token, :token_type),
+      refresh_token: token.refresh_token,
+      token: token.access_token
+    }
+  end
 
   # def fetch_user(conn) do
   # case CalDAV.get_user(conn.private.fastmail_token) do
