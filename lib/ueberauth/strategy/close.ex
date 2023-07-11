@@ -44,7 +44,8 @@ defmodule Ueberauth.Strategy.Close do
       {:ok, %{token: %OAuth2.AccessToken{access_token: "" <> _string} = token}} ->
         conn
         |> put_private(:close_token, token)
-        |> fetch_user()
+
+      # |> fetch_user()
 
       err ->
         handle_failure(conn, err)
@@ -62,64 +63,67 @@ defmodule Ueberauth.Strategy.Close do
     |> put_private(:close_token, nil)
   end
 
-  @doc """
-  Includes the credentials from the Fastmail response.
-  """
-  def credentials(conn) do
-    # token = conn.private.fastmail_token
-    # scope_string = token.other_params["scope"] || ""
-    # scopes = String.split(scope_string, " ")
+  # @doc """
+  # Includes the credentials from the Fastmail response.
+  # """
 
-    # %Credentials{
-    #   expires: !!token.expires_at,
-    #   expires_at: token.expires_at,
-    #   scopes: scopes,
-    #   token_type: Map.get(token, :token_type),
-    #   refresh_token: token.refresh_token,
-    #   token: token.access_token
-    # }
-  end
+  # def credentials(conn) do
+  # token = conn.private.fastmail_token
+  # scope_string = token.other_params["scope"] || ""
+  # scopes = String.split(scope_string, " ")
 
-  def fetch_user(conn) do
-    # case CalDAV.get_user(conn.private.fastmail_token) do
-    #   {:ok, user} ->
-    #     email =
-    #       case user[:email] do
-    #         "mailto:" <> e -> e
-    #         e -> e
-    #       end
+  # %Credentials{
+  #   expires: !!token.expires_at,
+  #   expires_at: token.expires_at,
+  #   scopes: scopes,
+  #   token_type: Map.get(token, :token_type),
+  #   refresh_token: token.refresh_token,
+  #   token: token.access_token
+  # }
+  # end
 
-    #     display_name = user[:display_name]
+  # def fetch_user(conn) do
+  # case CalDAV.get_user(conn.private.fastmail_token) do
+  #   {:ok, user} ->
+  #     email =
+  #       case user[:email] do
+  #         "mailto:" <> e -> e
+  #         e -> e
+  #       end
 
-    #     conn
-    #     |> put_private(:fastmail_email, email)
-    #     |> put_private(:fastmail_name, display_name)
+  #     display_name = user[:display_name]
 
-    #   {:error, _} ->
-    #     conn
-    # end
-  end
+  #     conn
+  #     |> put_private(:fastmail_email, email)
+  #     |> put_private(:fastmail_name, display_name)
 
-  @doc """
-  Fetches the fields to populate the info section of the `Ueberauth.Auth` struct.
-  """
-  def info(conn) do
-    # %Info{
-    #   email: conn.private.fastmail_email,
-    #   name: conn.private.fastmail_name
-    # }
-  end
+  #   {:error, _} ->
+  #     conn
+  # end
+  # end
 
-  @doc """
-  Stores the raw information (including the token) obtained from the Fastmail callback.
-  """
-  def extra(conn) do
-    # %Extra{
-    #   raw_info: %{
-    #     token: conn.private.fastmail_token
-    #   }
-    # }
-  end
+  # @doc """
+  # Fetches the fields to populate the info section of the `Ueberauth.Auth` struct.
+  # """
+
+  # def info(conn) do
+  # %Info{
+  #   email: conn.private.fastmail_email,
+  #   name: conn.private.fastmail_name
+  # }
+  # end
+
+  # @doc """
+  # Stores the raw information (including the token) obtained from the Fastmail callback.
+  # """
+
+  # def extra(conn) do
+  # %Extra{
+  #   raw_info: %{
+  #     token: conn.private.fastmail_token
+  #   }
+  # }
+  # end
 
   # Request failure handling
 
