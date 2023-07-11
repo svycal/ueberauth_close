@@ -25,20 +25,22 @@
 
 1. Update your provider configuration:
 
-   Use that if you want to read client ID/secret from the environment
-   variables in the compile time:
+   To read client ID/secret from the environment
+   variables at compile time:
 
    ```elixir
    config :ueberauth, Ueberauth.Strategy.Close.OAuth,
-     client_id: System.get_env("CLOSE_CLIENT_ID")
+     client_id: System.get_env("CLOSE_CLIENT_ID"),
+     client_secret: System.get_env("CLOSE_CLIENT_SECRET")
    ```
 
-   Use that if you want to read client ID/secret from the environment
-   variables in the run time:
+   To read client ID/secret from the environment
+   variables at run time:
 
    ```elixir
    config :ueberauth, Ueberauth.Strategy.Close.OAuth,
-     client_id: {System, :get_env, ["CLOSE_CLIENT_ID"]}
+     client_id: {System, :get_env, ["CLOSE_CLIENT_ID"]},
+     client_secret: {System, :get_env, ["CLOSE_CLIENT_SECRET"]}
    ```
 
 1. Include the Überauth plug in your controller:
