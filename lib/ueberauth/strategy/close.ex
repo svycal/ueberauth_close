@@ -82,6 +82,43 @@ defmodule Ueberauth.Strategy.Close do
     }
   end
 
+
+  # @doc """
+  # Fetches the fields to populate the info section of the `Ueberauth.Auth` struct.
+  # """
+  def info(conn) do
+  # Fetch the data from https://api.close.com/api/v1/me/ using the access token.
+  # This gives extra data about the user.
+  access_token = conn.private.close_token.access_token
+  url = "https://api.close.com/api/v1/me/"
+
+  # Set up the Tesla client
+  client = Tesla.client([
+    {Tesla.Middleware.Headers, [{"Authorization", "Bearer #{access_token}"}]},
+  ])
+
+  # Make the request
+  response = client |> Tesla.get(url)
+
+  # Parse the response
+  case response do
+    {:ok, %{status: 200, body: body}} ->
+      {:ok, body} = Jason.decode(body)
+
+      %Ueberauth.Auth.Info{
+        first_name: body |> Map.get("first_name"),
+        last_name: body |> Map.get("last_name"),
+        email: body |> Map.get("email"),
+        image: body |> Map.get("image"),
+        phone: body |> Map.get("phone")
+      }
+
+    _ ->
+      %Ueberauth.Auth.Info{}
+  end
+end
+
+
   @doc """
   Stores the raw information (e.g. account/user ID) obtained from the Close callback.
   """
