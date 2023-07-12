@@ -7,7 +7,6 @@ defmodule Ueberauth.Strategy.Close do
     default_scope: "all.full_access offline_access",
     oauth2_module: Ueberauth.Strategy.Close.OAuth
 
-  alias Ueberauth.Auth.Info
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
 
@@ -78,52 +77,21 @@ defmodule Ueberauth.Strategy.Close do
       scopes: scopes,
       token_type: Map.get(token, :token_type),
       refresh_token: token.refresh_token,
-      token: token.access_token
+      token: token.access_token,
+      other: token.other_params
     }
   end
 
-  # def fetch_user(conn) do
-  # case CalDAV.get_user(conn.private.fastmail_token) do
-  #   {:ok, user} ->
-  #     email =
-  #       case user[:email] do
-  #         "mailto:" <> e -> e
-  #         e -> e
-  #       end
+  @doc """
+  Stores the raw information (e.g. account/user ID) obtained from the Close callback.
+  """
+  def extra(conn) do
+    token = conn.private.close_token
 
-  #     display_name = user[:display_name]
-
-  #     conn
-  #     |> put_private(:fastmail_email, email)
-  #     |> put_private(:fastmail_name, display_name)
-
-  #   {:error, _} ->
-  #     conn
-  # end
-  # end
-
-  # @doc """
-  # Fetches the fields to populate the info section of the `Ueberauth.Auth` struct.
-  # """
-
-  # def info(conn) do
-  # %Info{
-  #   email: conn.private.fastmail_email,
-  #   name: conn.private.fastmail_name
-  # }
-  # end
-
-  # @doc """
-  # Stores the raw information (including the token) obtained from the Fastmail callback.
-  # """
-
-  # def extra(conn) do
-  # %Extra{
-  #   raw_info: %{
-  #     token: conn.private.fastmail_token
-  #   }
-  # }
-  # end
+    %Extra{
+      raw_info: token.other_params
+    }
+  end
 
   # Request failure handling
 
