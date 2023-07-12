@@ -16,7 +16,7 @@ defmodule Ueberauth.Strategy.Close.OAuth do
   @defaults [
     strategy: __MODULE__,
     site: "https://api.close.com",
-    authorize_url: "https://api.close.com/oauth2/authorize/",
+    authorize_url: "https://app.close.com/oauth2/authorize/",
     token_url: "https://api.close.com/oauth2/token/"
   ]
 
