@@ -12,7 +12,7 @@ defmodule Ueberauth.Strategy.CloseTest do
       authorize_url = "https://closeapi.test"
 
       expect(OAuthMock, :authorize_url!, fn params, opts ->
-        assert Keyword.get(params, :scope) == "https://www.close.io/dev/protocol-caldav"
+        assert Keyword.get(params, :scope) == "all.full_access offline_access"
 
         assert opts == [
                  {:redirect_uri, "http://www.example.com/auth/close/callback"}
