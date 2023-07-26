@@ -7,6 +7,8 @@ defmodule Ueberauth.Strategy.Close do
     default_scope: "all.full_access offline_access",
     oauth2_module: Ueberauth.Strategy.Close.OAuth
 
+  require Logger
+
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
 
@@ -112,6 +114,10 @@ defmodule Ueberauth.Strategy.Close do
           image: body |> Map.get("image"),
           phone: body |> Map.get("phone")
         }
+
+      _ ->
+        Logger.warn("Failed to fetch user info from Close API: #{inspect(response)}")
+        %Ueberauth.Auth.Info{}
     end
   end
 
