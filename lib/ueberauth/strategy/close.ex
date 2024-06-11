@@ -116,7 +116,7 @@ defmodule Ueberauth.Strategy.Close do
         }
 
       _ ->
-        Logger.warn("Failed to fetch user info from Close API: #{inspect(response)}")
+        Logger.warning("Failed to fetch user info from Close API: #{inspect(response)}")
         %Ueberauth.Auth.Info{}
     end
   end
